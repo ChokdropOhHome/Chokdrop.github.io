@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1c0b24">
+  <title>A little surprise 💌</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <noscript>
+    <p class="noscript">This surprise needs JavaScript turned on to open.</p>
+  </noscript>
+
+  <main id="app">
+
+    <!-- 1. HUB -->
+    <section class="screen is-active" data-screen="hub" aria-labelledby="t-hub">
+      <div class="card">
+        <h1 id="t-hub" tabindex="-1">Did <span data-bind="senderFull"></span> send you this? 💌</h1>
+        <p class="sub">Someone has a little surprise for you...</p>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-go="confirm1">Yes 💗</button>
+          <button type="button" class="btn btn-ghost" data-go="verify">No 🙈</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. GIRLFRIEND VERIFICATION -->
+    <section class="screen" data-screen="verify" aria-labelledby="t-verify">
+      <div class="card">
+        <h1 id="t-verify" tabindex="-1">Are youuu sure you're not <span data-bind="senderShort"></span>'s beautiful gf? 🥺💗</h1>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-go="confirm1">Yes, I am 😌💕</button>
+          <button type="button" class="btn btn-ghost" data-go="hub">No, I'm not 🙄</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CONFIRMATION ONE -->
+    <section class="screen" data-screen="confirm1" aria-labelledby="t-c1">
+      <div class="card">
+        <h1 id="t-c1" tabindex="-1">Are you sure? 🥹</h1>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-go="confirm2">Yes, I'm sure 💗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CONFIRMATION TWO -->
+    <section class="screen" data-screen="confirm2" aria-labelledby="t-c2">
+      <div class="card">
+        <h1 id="t-c2" tabindex="-1">Are youuu really, really sure? 💞</h1>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-go="login">YESSS, I AM! 💘</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. NAME + PASSWORD -->
+    <section class="screen" data-screen="login" aria-labelledby="t-login">
+      <div class="card">
+        <h1 id="t-login" tabindex="-1">Okay, what's your name and password? 🤭</h1>
+        <form id="loginForm" novalidate autocomplete="off">
+          <div class="field">
+            <label for="nameInput">Name</label>
+            <input id="nameInput" name="name" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="next">
+          </div>
+          <div class="field">
+            <label for="pwInput">Password</label>
+            <div class="pw-wrap">
+              <input id="pwInput" name="password" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" aria-describedby="pwHint formMsg">
+              <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">Show</button>
+            </div>
+            <p class="hint" id="pwHint"></p>
+          </div>
+          <p class="form-msg" id="formMsg" role="alert" aria-live="assertive"></p>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Unlock my surprise 💗</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 6. WRONG CREDENTIALS -->
+    <section class="screen" data-screen="denied" aria-labelledby="t-denied">
+      <div class="card card-denied">
+        <div class="anger" id="anger" aria-hidden="true">
+          <span class="face">😤</span>
+          <svg class="heart-shake" viewBox="0 0 32 30" width="44" height="41">
+            <path d="M16 29C-6 14 5-3 16 7c11-10 22 7 0 22z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h1 id="t-denied" tabindex="-1">Don't try to impersonate <span data-bind="senderShort"></span>'s beautiful and best gf! 😤💗</h1>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-go="login">Let me try again 💕</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. REVEAL + LETTER -->
+    <section class="screen screen-reveal" data-screen="reveal" aria-labelledby="t-reveal">
+      <div class="reveal-inner">
+
+        <div class="hero" id="hero">
+          <h1 id="t-reveal" class="reveal-title is-stage" tabindex="-1"></h1>
+          <p class="reveal-sub is-stage" id="revealSub"></p>
+
+          <div class="envelope-wrap is-stage" id="envelopeWrap" aria-hidden="true">
+            <div class="envelope" id="envelope">
+              <div class="env-back"></div>
+              <div class="env-flap"></div>
+              <div class="env-paper"></div>
+              <div class="env-front"></div>
+              <div class="env-seal">♡</div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary is-stage" id="openLetter">Open my letter 💌</button>
+        </div>
+
+        <article class="letter-view" id="letterView" hidden tabindex="-1" aria-label="Your letter">
+          <div class="paper">
+            <div id="letterBody"></div>
+          </div>
+          <div class="photos" id="photos" hidden></div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- MUSIC (appears when the letter is opened) -->
+  <div class="dock" id="dock" hidden>
+    <button type="button" class="prompt" id="playPrompt" hidden>Play our song ♡</button>
+    <p class="player-note" id="playerNote" role="status" hidden></p>
+    <div class="player" id="player">
+      <div class="player-row">
+        <div class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="track">
+          <span class="track-title" id="songTitle"></span>
+          <span class="track-artist" id="songArtist"></span>
+        </div>
+        <button type="button" class="icon-btn" id="btnPlay" aria-label="Pause music">
+          <svg class="i-play" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.8l-10-6.5A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="btnMute" aria-label="Mute music" aria-pressed="false">
+          <svg class="i-sound" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="i-muted" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="vol-row">
+        <label for="volume" class="vol-label">Volume</label>
+        <input type="range" id="volume" min="0" max="100" step="1" value="70">
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/logic.js"></script>
+  <script src="js/sky.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
